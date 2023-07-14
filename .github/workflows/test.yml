@@ -57,3 +57,20 @@ jobs:
         run: ./tools/HardwareSimulator.sh ./02/Inc16.tst
       - name: Test Chapter 02/ALU
         run: ./tools/HardwareSimulator.sh ./02/ALU.tst
+
+      - name: Test Chapter 03/Bit
+        run: ./tools/HardwareSimulator.sh ./03/a/Bit.tst
+      - name: Test Chapter 03/Register
+        run: ./tools/HardwareSimulator.sh ./03/a/Register.tst
+      - name: Test Chapter 03/RAM8
+        run: ./tools/HardwareSimulator.sh ./03/a/RAM8.tst
+      - name: Test Chapter 03/RAM64
+        run: ./tools/HardwareSimulator.sh ./03/a/RAM64.tst
+      - name: Test Chapter 03/PC
+        run: ./tools/HardwareSimulator.sh ./03/a/PC.tst
+      - name: Test Chapter 03/RAM512
+        run: ./tools/HardwareSimulator.sh ./03/b/RAM512.tst
+      - name: Test Chapter 03/RAM4K
+        run: ./tools/HardwareSimulator.sh ./03/b/RAM4K.tst
+      - name: Test Chapter 03/RAM16K
+        run: ./tools/HardwareSimulator.sh ./03/b/RAM16K.tst
