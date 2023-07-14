@@ -9,11 +9,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'oracle'
           java-version: '17'
+
       - name: Test Chapter 01/Not
         run: ./tools/HardwareSimulator.sh ./01/Not.tst
       - name: Test Chapter 01/And
@@ -44,3 +46,14 @@ jobs:
         run: ./tools/HardwareSimulator.sh ./01/DMux4Way.tst
       - name: Test Chapter 01/DMux8Way
         run: ./tools/HardwareSimulator.sh ./01/DMux8Way.tst
+
+      - name: Test Chapter 02/HalfAdder
+        run: ./tools/HardwareSimulator.sh ./02/HalfAdder.tst
+      - name: Test Chapter 02/FullAdder
+        run: ./tools/HardwareSimulator.sh ./02/FullAdder.tst
+      - name: Test Chapter 02/Add16
+        run: ./tools/HardwareSimulator.sh ./02/Add16.tst
+      - name: Test Chapter 02/Inc16
+        run: ./tools/HardwareSimulator.sh ./02/Inc16.tst
+      - name: Test Chapter 02/ALU
+        run: ./tools/HardwareSimulator.sh ./02/ALU.tst
