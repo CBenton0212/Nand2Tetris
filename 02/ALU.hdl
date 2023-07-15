@@ -43,34 +43,35 @@ CHIP ALU {
 
     PARTS:
     // zero the x input
-    Mux16(a=x, b=false, sel=zx, out=zxout);
+    Mux16(a=x, b=false, sel=zx, out=zxOut);
 
     // negate the x input
-    Not16(in=zxout, out=notzxout);
-    Mux16(a=zxout, b=notzxout, sel=nx, out=nxout);
+    Not16(in=zxOut, out=zxNotOut);
+    Mux16(a=zxOut, b=zxNotOut, sel=nx, out=nxOut);
 
     // zero the y input
-    Mux16(a=y, b=false, sel=zy, out=zyout);
+    Mux16(a=y, b=false, sel=zy, out=zyOut);
 
     // negate the y input
-    Not16(in=zyout, out=notzyout);
-    Mux16(a=zyout, b=notzyout, sel=ny, out=nyout);
+    Not16(in=zyOut, out=zyNotOut);
+    Mux16(a=zyOut, b=zyNotOut, sel=ny, out=nyOut);
     
-    // f == 1 ? (x + y) : (x & y)
-    Add16(a=nxout, b=nyout, out=nxoutplusnyout);
-    And16(a=nxout, b=nyout, out=nxoutandnyout);
-    Mux16(a=nxoutandnyout, b=nxoutplusnyout, sel=f, out=fout);
+    // fOut = (f == 1) ? (x + y) : (x & y)
+    And16(a=nxOut, b=nyOut, out=nxOutAndnyOut);
+    Add16(a=nxOut, b=nyOut, out=nxOutAddnyOut);
+    Mux16(a=nxOutAndnyOut, b=nxOutAddnyOut, sel=f, out=fOut);
     
-    // negate the out output
-    Not16(in=fout, out=nfout);
-    Mux16(a=fout, b=nfout, sel=no, out=out, out[0..7]=low8, out[8..15]=high8, out[15]=msb);
+    // negate fOut if no == 1
+    // capture the lowest 8 bits of out, the highest 8 bits, and the MSB
+    Not16(in=fOut, out=fNotOut);
+    Mux16(a=fOut, b=fNotOut, sel=no, out=out, out[0..7]=outLow8, out[8..15]=outHigh8, out[15]=outMSB);
 
     // zr = (out == 0) ? 1 : 0
-    Or8Way(in=low8, out=orzr1);
-    Or8Way(in=high8, out=orzr2);
-    Or(a=orzr1, b=orzr2, out=orzr3);
-    Not(in=orzr3, out=zr);
+    Or8Way(in=outLow8, out=low8OrOut);
+    Or8Way(in=outHigh8, out=high8OrOut);
+    Or(a=low8OrOut, b=high8OrOut, out=outOrOut);
+    Not(in=outOrOut, out=zr);
 
     // ng = (out < 0) ? 1 : 0
-    And(a=true, b=msb, out=ng);
+    And(a=true, b=outMSB, out=ng);
 }

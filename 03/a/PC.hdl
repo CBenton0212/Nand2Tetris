@@ -17,17 +17,17 @@ CHIP PC {
 
     PARTS:
     // increment out[t-1] by 1
-    Inc16(in=prevout, out=incout);
+    Inc16(in=prevOut, out=incOut);
     
     // increment if inc == 1
-    Mux16(a=prevout, b=incout, sel=inc, out=muxout1);
+    Mux16(a=prevOut, b=incOut, sel=inc, out=muxOut1);
 
     // load input bits if load == 1
-    Mux16(a=muxout1, b=in, sel=load, out=muxout2);
+    Mux16(a=muxOut1, b=in, sel=load, out=muxOut2);
     
     // reset bits to 0 if reset == 1
-    Mux16(a=muxout2, b=false, sel=reset, out=muxout3);
+    Mux16(a=muxOut2, b=false, sel=reset, out=muxOut3);
     
-    // set out[t] to out, cache out[t-1] with prevout
-    Register(in=muxout3, load=true, out=out, out=prevout);
+    // set out[t] to out, cache out[t-1] with prevOut
+    Register(in=muxOut3, load=true, out=out, out=prevOut);
 }
